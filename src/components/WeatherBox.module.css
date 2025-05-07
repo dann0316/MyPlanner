@@ -1,0 +1,5 @@
+.weatherLoading {
+    transition: all;
+    transform: rotate(360);
+
+}

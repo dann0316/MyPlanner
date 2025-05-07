@@ -1,0 +1,10 @@
+.container Button.addButton {
+    bottom: 20px;
+    right: 20px;
+    background-color: skyblue;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}

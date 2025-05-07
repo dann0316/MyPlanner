@@ -1,0 +1,67 @@
+.titleContainer {
+    font-weight: bold;
+    color: white;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5px;
+    font-size: 15px;
+    padding: 4px;
+}
+
+.inputContainer {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.inputContainer .inputContentContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* 기본 상태 */
+.todoText {
+    position: relative;
+    display: inline-block;
+    transition: color 0.3s ease;
+}
+
+/* 선 긋기 전 상태 */
+.todoText::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    height: 2px;
+    background-color: var(--bg-color, red);;
+    width: 100%;
+    transform: scaleX(0); /* 처음엔 안 보이게 */
+    transform-origin: left; /* 선 시작점 왼쪽 */
+    transition: all 0.3s ease;
+}
+
+/* 선 그은 후 상태 */
+.checked::after {
+    transform: scaleX(1); /* 선이 왼쪽에서 오른쪽 */
+}
+
+.inputContainer .checkBox {
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    background-color: white;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
