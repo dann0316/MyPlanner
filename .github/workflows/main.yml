@@ -1,12 +1,14 @@
-#-- .github/workflows/main.yml
 name: AI Code Reviewer
 
 on:
-  pull_request:
+  workflow_dispatch:  # 수동 실행 가능
+  pull_request:       # PR 열리거나 수정될 때 자동 실행
     types:
       - opened
       - synchronize
+
 permissions: write-all
+
 jobs:
   review:
     runs-on: ubuntu-latest
@@ -14,10 +16,21 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3
 
+      - name: Generate file list for full review
+        if: github.event_name == 'workflow_dispatch'  # 수동 실행일 때만 전체 검사
+        run: |
+          echo "🔍 전체 파일 스캔 중..."
+          find . -type f \
+            \( -name "*.py" -o -name "*.js" -o -name "*.ts" -o -name "*.java" -o -name "*.cpp" \) \
+            ! -name "*.md" ! -name "*.json" \
+            > files.txt
+          cat files.txt
+        shell: bash
+
       - name: AI Code Reviewer
         uses: dann0316/ai-code-reviewer@main
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # The GITHUB_TOKEN is there by default so you just need to keep it like it is and not necessarily need to add it as secret as it will throw an error. [More Details](https://docs.github.com/en/actions/security-guides/automatic-token-authentication#about-the-github_token-secret)
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_API_MODEL: "gpt-4" # Optional: defaults to "gpt-4"
-          exclude: "**/*.json, **/*.md" # Optional: exclude patterns separated by commas
+          OPENAI_API_MODEL: "gpt-4"
+          exclude: "**/*.json, **/*.md"
